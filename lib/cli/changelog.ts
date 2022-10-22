@@ -42,7 +42,7 @@ export const changelogHandler = async ({ outputFile }: Props) => {
 			tag,
 			log: filteredLog,
 			authors: Object.values(authors),
-			urlToGitDiff: `https://github.com/sladg/nextjs-lambda/releases/tag/${formattedPath}`,
+			urlToGitDiff: `https://github.com/judemanutd/nextjs-lambda/releases/tag/${formattedPath}`,
 		}
 	})
 
@@ -61,7 +61,7 @@ export const changelogHandler = async ({ outputFile }: Props) => {
 
 		logs.forEach((b) => {
 			console.log(b.refs)
-			changelog.push(`* ${b.message} \[[${b.hash}](https://github.com/sladg/nextjs-lambda/commit/${b.hash})\]`)
+			changelog.push(`* ${b.message} \[[${b.hash}](https://github.com/judemanutd/nextjs-lambda/commit/${b.hash})\]`)
 		})
 	})
 

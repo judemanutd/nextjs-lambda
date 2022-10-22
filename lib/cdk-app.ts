@@ -1,14 +1,19 @@
 import path from 'path'
-import packageJson from '../package.json'
+import * as dotenv from 'dotenv'
 
 import { HttpApi } from '@aws-cdk/aws-apigatewayv2-alpha'
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha'
 import { App, CfnOutput, Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib'
 import { CloudFrontAllowedMethods, CloudFrontWebDistribution, OriginAccessIdentity } from 'aws-cdk-lib/aws-cloudfront'
 import { Function } from 'aws-cdk-lib/aws-lambda'
+import { RetentionDays } from '@aws-cdk/aws-logs'
 import { Code, LayerVersion, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
+
+import packageJson from '../package.json'
+
+dotenv.config()
 
 const app = new App()
 
@@ -19,6 +24,12 @@ class NextStandaloneStack extends Stack {
 	constructor(scope: App, id: string, props?: StackProps) {
 		super(scope, id, props)
 
+		// CF Certificate if exists
+		const domains: string = process.env.CF_DOMAINS as unknown as string
+		const domainNames: string[] = JSON.parse(domains)
+		const acmCertificateArn: string = process.env.CF_CERTIFICATE_ARN as unknown as string
+		const cloudfrontDescription: string = process.env.CF_DESCRIPTION || 'Cloudfront for NextJS app'
+
 		const config = {
 			apigwServerPath: '/_server',
 			apigwImagePath: '/_image',
@@ -28,7 +39,15 @@ class NextStandaloneStack extends Stack {
 			imageHandlerZipPath: path.resolve(cdkFolder, '../dist/image-handler.zip'),
 			customServerHandler: 'handler.handler',
 			customImageHandler: 'handler.handler',
-			cfnViewerCertificate: undefined,
+			cfnViewerCertificate: domainNames?.length
+				? {
+						aliases: domainNames,
+						props: {
+							acmCertificateArn,
+							// sslSupportMethod: 'sni-only',
+						},
+				  }
+				: undefined,
 			...props,
 		}
 
@@ -42,12 +61,14 @@ class NextStandaloneStack extends Stack {
 
 		const serverLambda = new Function(this, 'DefaultNextJs', {
 			code: Code.fromAsset(config.codeZipPath),
+			description: 'NextJs default Lambda',
+			logRetention: RetentionDays.THREE_DAYS,
 			runtime: Runtime.NODEJS_16_X,
 			handler: config.customServerHandler,
 			layers: [depsLayer],
 			// No need for big memory as image handling is done elsewhere.
 			memorySize: 512,
-			timeout: Duration.seconds(15),
+			timeout: Duration.seconds(30),
 			environment: {
 				// Set env vars based on what's available in environment.
 				...Object.entries(process.env)
@@ -66,10 +87,12 @@ class NextStandaloneStack extends Stack {
 
 		const imageLambda = new Function(this, 'ImageOptimizationNextJs', {
 			code: Code.fromAsset(config.imageHandlerZipPath),
+			description: 'NextJs image Lambda',
 			runtime: Runtime.NODEJS_16_X,
+			logRetention: RetentionDays.THREE_DAYS,
 			handler: config.customImageHandler,
 			memorySize: 1024,
-			timeout: Duration.seconds(10),
+			timeout: Duration.seconds(30),
 			environment: {
 				S3_SOURCE_BUCKET: assetsBucket.bucketName,
 			},
@@ -93,7 +116,7 @@ class NextStandaloneStack extends Stack {
 		const cfnDistro = new CloudFrontWebDistribution(this, 'NextCfnProxy', {
 			// Must be set, because cloufront would use index.html which would not match in NextJS routes.
 			defaultRootObject: '',
-			comment: 'Cloudfront for NextJS app',
+			comment: cloudfrontDescription,
 			viewerCertificate: config.cfnViewerCertificate,
 			originConfigs: [
 				{

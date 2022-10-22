@@ -27,8 +27,8 @@ This library uses Cloudfront, S3, ApiGateway and Lambdas to deploy easily in sec
 ## TL;DR
 - In your NextJS project, set output to standalone.
 - Run `next build` (will generate standalone next folder).
-- Run `npx --package @sladg/nextjs-lambda next-utils pack` (will create ZIPs).
-- Run `npx --package @sladg/nextjs-lambda next-utils deploy` (will deploy to AWS).
+- Run `npx --package @judemanutd/nextjs-lambda next-utils pack` (will create ZIPs).
+- Run `npx --package @judemanutd/nextjs-lambda next-utils deploy` (will deploy to AWS).
 - Profit 🎉
 
 ---
@@ -185,4 +185,4 @@ Simple CLI command that takes commit message and current version and outputs (st
 
 Similar to guess command, however, it automatically tags a commit on current branch and creates release branch for you so hooking up pipelines is as simple as it can be. Version is automatically bumped in common NPM and PHP files (package.json, package-lock.json and composer.json).
 
-Simply call `@sladg/next-lambda shipit` on any branch and be done.
+Simply call `@judemanutd/next-lambda shipit` on any branch and be done.
