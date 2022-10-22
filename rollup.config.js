@@ -1,4 +1,4 @@
-import pkg from './package.json'
+import pkg from './package.json' assert { type: 'json' }
 import { defineConfig } from 'rollup'
 import esbuild from 'esbuild'
 import path from 'path'

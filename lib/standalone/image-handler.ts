@@ -39,11 +39,11 @@ const requestHandler =
 		res.statusCode = 200
 
 		if (response.ContentType) {
-			res.setHeader('Content-Type', response.ContentType)
+			res.setHeader('Content-Type', response.ContentType as any)
 		}
 
 		if (response.CacheControl) {
-			res.setHeader('Cache-Control', response.CacheControl)
+			res.setHeader('Cache-Control', response.CacheControl as any)
 		}
 
 		res.write(data)

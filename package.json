@@ -1,6 +1,7 @@
 {
   "name": "@judemanutd/nextjs-lambda",
   "version": "1.0.0",
+  "type": "module",
   "description": "Plug-and-play lambda for replacing default NextJS image optimization handler.",
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "@aws-cdk/aws-apigatewayv2-alpha": "^2.47.0-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.47.0-alpha.0",
     "@aws-cdk/aws-logs": "^1.178.0",
+    "@aws-sdk/signature-v4-crt": "^3.193.0",
     "@types/archiver": "^5.3.1",
     "@types/aws-lambda": "^8.10.108",
     "@types/node": "^18.11.3",
@@ -37,6 +39,7 @@
     "archiver": "^5.3.1",
     "aws-cdk": "^2.47.0",
     "aws-cdk-lib": "^2.47.0",
+    "aws-crt": "^1.14.5",
     "commander": "^9.4.1",
     "constructs": "^10",
     "replace-in-file": "^6.3.5",

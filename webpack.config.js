@@ -1,12 +1,11 @@
 import path from 'path'
-import { Configuration } from 'webpack'
 import ZipPlugin from 'zip-webpack-plugin'
 
-const webpackConfig: Configuration = {
+const webpackConfig = {
 	entry: './lib/standalone/image-handler.ts',
 	target: 'node',
 	output: {
-		path: path.resolve(__dirname, '.webpack'),
+		path: path.resolve('.webpack'),
 		filename: 'handler.js',
 		libraryTarget: 'commonjs',
 		library: 'handler',
@@ -29,7 +28,7 @@ const webpackConfig: Configuration = {
 	},
 	plugins: [
 		new ZipPlugin({
-			path: path.resolve(__dirname, 'dist'),
+			path: path.resolve('dist'),
 			filename: 'image-handler.zip',
 		}),
 	],
