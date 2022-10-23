@@ -44,6 +44,7 @@
     "aws-crt": "^1.14.5",
     "commander": "^9.4.1",
     "constructs": "^10",
+    "dotenv": "^16.0.3",
     "replace-in-file": "^6.3.5",
     "semver-sort": "^1.0.0",
     "simple-git": "^3.14.1"
@@ -55,7 +56,6 @@
     "@types/zip-webpack-plugin": "^3.0.3",
     "adm-zip": "^0.5.9",
     "critters": "^0.0.16",
-    "dotenv": "^16.0.3",
     "esbuild": "^0.15.12",
     "next": "^12.3.1",
     "rimraf": "^3.0.2",
