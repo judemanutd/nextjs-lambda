@@ -57,7 +57,7 @@ module.exports = defineConfig([
 		input: 'lib/index.ts',
 		plugins: [typescript({ useTsconfigDeclarationDir: true })],
 		output: {
-			format: 'esm',
+			format: 'commonjs',
 			file: pkg.exports,
 		},
 	},
@@ -65,7 +65,7 @@ module.exports = defineConfig([
 		input: 'lib/cli.ts',
 		plugins: [standalone],
 		output: {
-			format: 'esm',
+			format: 'commonjs',
 			file: pkg.bin['next-utils'],
 			banner: '#!/usr/bin/env node',
 		},
@@ -86,7 +86,7 @@ module.exports = defineConfig([
 		input: 'lib/cdk-app.ts',
 		plugins: [typescript({ useTsconfigDeclarationDir: true, tsconfig: './tsconfig.json' }), json()],
 		output: {
-			format: 'esm',
+			format: 'commonjs',
 			file: 'dist/cdk-app.js',
 		},
 	},
