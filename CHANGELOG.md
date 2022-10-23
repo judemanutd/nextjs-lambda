@@ -1,13 +1,19 @@
 # Changelog
-Current version: 1.1.3
+Current version: 1.1.4
 
 
-## [v4.0.0](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.1.3...v4.0.0)
+## [v4.0.0](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.1.4...v4.0.0)
 
+* cloudfront http version update [[44d9fa5237ec03d88fbe15baeee450fd9f116116](https://github.com/judemanutd/nextjs-lambda/commit/44d9fa5237ec03d88fbe15baeee450fd9f116116)]
 * Merge remote-tracking branch 'origin/master' [[c58182350aab6b5bced7055ee3467402c7fc76f2](https://github.com/judemanutd/nextjs-lambda/commit/c58182350aab6b5bced7055ee3467402c7fc76f2)]
 * domains fix [[d3273c1d3a7ff25b2c1f30bf4f92579e04c69575](https://github.com/judemanutd/nextjs-lambda/commit/d3273c1d3a7ff25b2c1f30bf4f92579e04c69575)]
 * moved dotenv config [[df5d21b9bf470635264883932e0da0605458fadb](https://github.com/judemanutd/nextjs-lambda/commit/df5d21b9bf470635264883932e0da0605458fadb)]
 * updated rollup config [[f018d2d8d3ce2bcb7d5d707db4a7ee69c5b48a7d](https://github.com/judemanutd/nextjs-lambda/commit/f018d2d8d3ce2bcb7d5d707db4a7ee69c5b48a7d)]
+
+
+## [v1.1.4](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.1.3...v1.1.4)
+
+* cloudfront http version update [[44d9fa5237ec03d88fbe15baeee450fd9f116116](https://github.com/judemanutd/nextjs-lambda/commit/44d9fa5237ec03d88fbe15baeee450fd9f116116)]
 
 
 ## [v1.1.3](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.1.2...v1.1.3)
@@ -58,6 +64,8 @@ Current version: 1.1.3
 
 ## [v1.0.0](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.0.0)
 
+* Merge branch 'master' of github.com:judemanutd/nextjs-lambda [[0fae4b27a58aa2607069e813f55f8ffe6ce1be20](https://github.com/judemanutd/nextjs-lambda/commit/0fae4b27a58aa2607069e813f55f8ffe6ce1be20)]
+* added min protocol version and ssl method for cf [[58a051e2a9bc59afec839beccec0a46df698e776](https://github.com/judemanutd/nextjs-lambda/commit/58a051e2a9bc59afec839beccec0a46df698e776)]
 * cloudfront http version update [[44d9fa5237ec03d88fbe15baeee450fd9f116116](https://github.com/judemanutd/nextjs-lambda/commit/44d9fa5237ec03d88fbe15baeee450fd9f116116)]
 * Merge remote-tracking branch 'origin/master' [[c58182350aab6b5bced7055ee3467402c7fc76f2](https://github.com/judemanutd/nextjs-lambda/commit/c58182350aab6b5bced7055ee3467402c7fc76f2)]
 * domains fix [[d3273c1d3a7ff25b2c1f30bf4f92579e04c69575](https://github.com/judemanutd/nextjs-lambda/commit/d3273c1d3a7ff25b2c1f30bf4f92579e04c69575)]
