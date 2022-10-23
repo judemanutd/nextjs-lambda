@@ -20,7 +20,7 @@
         "strict": true,
         "strictNullChecks": true,
         "strictPropertyInitialization": false,
-        "target": "ES2018",
+        "target": "ES2022",
     },
     "include": [
         "./lib/**/*.ts"

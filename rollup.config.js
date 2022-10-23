@@ -1,10 +1,10 @@
-import pkg from './package.json' assert { type: 'json' }
-import { defineConfig } from 'rollup'
-import esbuild from 'esbuild'
-import path from 'path'
-import AdmZip from 'adm-zip'
-import typescript from 'rollup-plugin-typescript2'
-import json from '@rollup/plugin-json'
+const pkg = require('./package.json')
+const { defineConfig } = require('rollup')
+const esbuild = require('esbuild')
+const path = require('path')
+const AdmZip = require('adm-zip')
+const typescript = require('rollup-plugin-typescript2')
+const json = require('@rollup/plugin-json')
 
 const standalone = {
 	name: 'standalone',
@@ -24,7 +24,7 @@ const standalone = {
 			write: false,
 			outdir: 'out',
 			platform: 'node',
-			target: 'es2020',
+			target: 'es2022',
 		})
 
 		result.errors.forEach((err) => {
@@ -52,12 +52,12 @@ const standalone = {
 	},
 }
 
-export default defineConfig([
+module.exports = defineConfig([
 	{
 		input: 'lib/index.ts',
 		plugins: [typescript({ useTsconfigDeclarationDir: true })],
 		output: {
-			format: 'commonjs',
+			format: 'esm',
 			file: pkg.exports,
 		},
 	},
@@ -65,7 +65,7 @@ export default defineConfig([
 		input: 'lib/cli.ts',
 		plugins: [standalone],
 		output: {
-			format: 'commonjs',
+			format: 'esm',
 			file: pkg.bin['next-utils'],
 			banner: '#!/usr/bin/env node',
 		},
@@ -86,11 +86,11 @@ export default defineConfig([
 		input: 'lib/cdk-app.ts',
 		plugins: [typescript({ useTsconfigDeclarationDir: true, tsconfig: './tsconfig.json' }), json()],
 		output: {
-			format: 'commonjs',
+			format: 'esm',
 			file: 'dist/cdk-app.js',
 		},
 	},
-	// @NOTE: Moved away from Rollup as Webpack is more efficient in bundling internal require.resolve calls.
+	// @NOTE: Moved away = require(Rollup as Webpack is more efficient in bundling internal require.resolve calls.
 	// Resulting in no need for layers and smaller bundle overall.
 	// {
 	// 	input: 'lib/standalone/image-handler.ts',

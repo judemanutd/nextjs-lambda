@@ -1,5 +1,5 @@
-import path from 'path'
-import ZipPlugin from 'zip-webpack-plugin'
+const path = require('path')
+const ZipPlugin = require('zip-webpack-plugin')
 
 const webpackConfig = {
 	entry: './lib/standalone/image-handler.ts',
@@ -34,4 +34,4 @@ const webpackConfig = {
 	],
 }
 
-export default webpackConfig
+module.exports = webpackConfig

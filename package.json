@@ -1,7 +1,6 @@
 {
   "name": "@judemanutd/nextjs-lambda",
   "version": "1.0.0",
-  "type": "module",
   "description": "Plug-and-play lambda for replacing default NextJS image optimization handler.",
   "repository": {
     "type": "git",
@@ -23,7 +22,7 @@
     "prebuild": "rm -rf dist",
     "build": "npm run build:main && npm run build:image",
     "build:image": "webpack --mode=production",
-    "build:main": "rollup -c",
+    "build:main": "rimraf dist && rollup -c rollup.config.js",
     "release": "node ./dist/cli.js shipit --gitUser @judemanutd --gitEmail jude.manutd@gmail.com",
     "changelog": "node ./dist/cli.js changelog"
   },
@@ -56,6 +55,7 @@
     "dotenv": "^16.0.3",
     "esbuild": "^0.15.12",
     "next": "^12.3.1",
+    "rimraf": "^3.0.2",
     "rollup": "^3.2.3",
     "rollup-plugin-typescript2": "^0.34.1",
     "serverless-http": "^3.1.0",

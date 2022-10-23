@@ -1,6 +1,7 @@
 import { mkdirSync, rmSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import path from 'path'
+
 import { nextServerConfigRegex } from '../consts'
 import { findInFile, findPathToNestedFile, validateFolderExists, validatePublicFolderStructure, zipFolder, zipMultipleFoldersOrFiles } from '../utils'
 

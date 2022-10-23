@@ -1,6 +1,7 @@
 import { DefaultLogFields, simpleGit } from 'simple-git'
 import semverSort from 'semver-sort'
 import { writeFileSync } from 'fs'
+
 import packageJson from '../../package.json'
 
 interface Props {
