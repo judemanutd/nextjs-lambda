@@ -48,6 +48,8 @@ class NextStandaloneStack extends Stack {
 						},
 				  }
 				: undefined,
+			lambdaTimeout: process.env.LAMBDA_TIMEOUT ? Number(process.env.LAMBDA_TIMEOUT) : 30,
+			lambdaMemory: process.env.LAMBDA_MEMORY ? Number(process.env.LAMBDA_MEMORY) : 1024,
 			...props,
 		}
 
@@ -67,8 +69,8 @@ class NextStandaloneStack extends Stack {
 			handler: config.customServerHandler,
 			layers: [depsLayer],
 			// No need for big memory as image handling is done elsewhere.
-			memorySize: 512,
-			timeout: Duration.seconds(30),
+			memorySize: config.lambdaMemory,
+			timeout: Duration.seconds(config.lambdaTimeout),
 			environment: {
 				// Set env vars based on what's available in environment.
 				...Object.entries(process.env)
