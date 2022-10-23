@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv'
 import { HttpApi } from '@aws-cdk/aws-apigatewayv2-alpha'
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha'
 import { App, CfnOutput, Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib'
-import { CloudFrontAllowedMethods, CloudFrontWebDistribution, OriginAccessIdentity } from 'aws-cdk-lib/aws-cloudfront'
+import { CloudFrontAllowedMethods, CloudFrontWebDistribution, OriginAccessIdentity, HttpVersion } from 'aws-cdk-lib/aws-cloudfront'
 import { Function } from 'aws-cdk-lib/aws-lambda'
 import { RetentionDays } from '@aws-cdk/aws-logs'
 import { Code, LayerVersion, Runtime } from 'aws-cdk-lib/aws-lambda'
@@ -120,6 +120,7 @@ class NextStandaloneStack extends Stack {
 			defaultRootObject: '',
 			comment: cloudfrontDescription,
 			viewerCertificate: config.cfnViewerCertificate,
+			httpVersion: HttpVersion.HTTP2_AND_3,
 			originConfigs: [
 				{
 					// Default behaviour, lambda handles.
