@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/judemanutd/nextjs-lambda"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "author": "Jude Fernandes <jude.manutd@gmail.com>",
   "exports": "./dist/lib/index.js",
