@@ -1,5 +1,15 @@
 # Changelog
-Current version: 1.0.5
+Current version: 4.0.0
+
+
+## [v4.0.0](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.1.0...v4.0.0)
+
+
+
+## [v1.1.0](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.0.5...v1.1.0)
+
+* fork repository sync [[0015f01f95240d22e8afb4114d0c77a7fdc28e3f](https://github.com/judemanutd/nextjs-lambda/commit/0015f01f95240d22e8afb4114d0c77a7fdc28e3f)]
+* feat(lambda-config): CLI configuration for memory and timeout [[b176d0a0a618092ac7f6a7931c2c7fd58d57d087](https://github.com/judemanutd/nextjs-lambda/commit/b176d0a0a618092ac7f6a7931c2c7fd58d57d087)]
 
 
 ## [v1.0.5](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.0.4...v1.0.5)
@@ -28,6 +38,7 @@ Current version: 1.0.5
 
 ## [v1.0.0](https://github.com/judemanutd/nextjs-lambda/releases/tag/v1.0.0)
 
+* updated rollup config [[f018d2d8d3ce2bcb7d5d707db4a7ee69c5b48a7d](https://github.com/judemanutd/nextjs-lambda/commit/f018d2d8d3ce2bcb7d5d707db4a7ee69c5b48a7d)]
 * fork repository sync [[0015f01f95240d22e8afb4114d0c77a7fdc28e3f](https://github.com/judemanutd/nextjs-lambda/commit/0015f01f95240d22e8afb4114d0c77a7fdc28e3f)]
 * updated library access [[0ea976a68ff17bb8a0c629f6f0a6ad679b37b515](https://github.com/judemanutd/nextjs-lambda/commit/0ea976a68ff17bb8a0c629f6f0a6ad679b37b515)]
 * version bump [[a2c955e102deb90f36974f209f51349d6b8868a3](https://github.com/judemanutd/nextjs-lambda/commit/a2c955e102deb90f36974f209f51349d6b8868a3)]
