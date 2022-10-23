@@ -4,7 +4,14 @@ import * as dotenv from 'dotenv'
 import { HttpApi } from '@aws-cdk/aws-apigatewayv2-alpha'
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha'
 import { App, CfnOutput, Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib'
-import { CloudFrontAllowedMethods, CloudFrontWebDistribution, OriginAccessIdentity, HttpVersion } from 'aws-cdk-lib/aws-cloudfront'
+import {
+	CloudFrontAllowedMethods,
+	CloudFrontWebDistribution,
+	OriginAccessIdentity,
+	HttpVersion,
+	SSLMethod,
+	SecurityPolicyProtocol,
+} from 'aws-cdk-lib/aws-cloudfront'
 import { Function } from 'aws-cdk-lib/aws-lambda'
 import { RetentionDays } from '@aws-cdk/aws-logs'
 import { Code, LayerVersion, Runtime } from 'aws-cdk-lib/aws-lambda'
@@ -44,7 +51,8 @@ class NextStandaloneStack extends Stack {
 						aliases: domainNames,
 						props: {
 							acmCertificateArn,
-							// sslSupportMethod: 'sni-only',
+							minimumProtocolVersion: SecurityPolicyProtocol.TLS_V1_2_2021,
+							sslSupportMethod: SSLMethod.SNI,
 						},
 				  }
 				: undefined,
