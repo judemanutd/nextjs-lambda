@@ -26,7 +26,7 @@ class NextStandaloneStack extends Stack {
 
 		// CF Certificate if exists
 		const domains: string = process.env.CF_DOMAINS as unknown as string
-		const domainNames: string[] = JSON.parse(domains)
+		const domainNames: string[] = domains ? JSON.parse(domains) : []
 		const acmCertificateArn: string = process.env.CF_CERTIFICATE_ARN as unknown as string
 		const cloudfrontDescription: string = process.env.CF_DESCRIPTION || 'Cloudfront for NextJS app'
 
