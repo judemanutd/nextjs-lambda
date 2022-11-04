@@ -1,6 +1,7 @@
 import { simpleGit } from 'simple-git'
 import { skipCiFlag } from '../consts'
-import { bumpCalculator, bumpMapping, BumpType, isValidTag, replaceVersionInCommonFiles } from '../utils'
+import { bumpCalculator, bumpMapping, BumpType, findHighestTag, isValidTag, replaceVersionInCommonFiles } from '../utils'
+import { changelogHandler } from './changelog'
 
 interface Props {
 	gitUser: string
@@ -9,9 +10,20 @@ interface Props {
 	failOnMissingCommit: boolean
 	releaseBranchPrefix: string
 	forceBump: boolean
+	generateChangelog: boolean
+	changelogPath: string
 }
 
-export const shipitHandler = async ({ gitEmail, gitUser, tagPrefix, failOnMissingCommit, forceBump, releaseBranchPrefix }: Props) => {
+export const shipitHandler = async ({
+	gitEmail,
+	gitUser,
+	tagPrefix,
+	failOnMissingCommit,
+	forceBump,
+	releaseBranchPrefix,
+	generateChangelog,
+	changelogPath,
+}: Props) => {
 	const git = simpleGit()
 
 	// Fetch tags to ensure we have the latest ones.
@@ -21,7 +33,8 @@ export const shipitHandler = async ({ gitEmail, gitUser, tagPrefix, failOnMissin
 	const [remote] = await git.getRemotes()
 
 	const latestCommit = log.latest?.hash
-	const latestTag = tags.latest ?? '0.0.0'
+
+	const latestTag = findHighestTag(tags.all)
 	const currentTag = latestTag.replace(tagPrefix, '')
 
 	console.log('Latest commit: ', latestCommit)
@@ -86,6 +99,14 @@ export const shipitHandler = async ({ gitEmail, gitUser, tagPrefix, failOnMissin
 		.raw('commit', '--message', `Release: ${nextTagWithPrefix} ${skipCiFlag}`)
 		// Create tag and push it to master.
 		.addTag(nextTagWithPrefix)
+
+	// If flag is passed, changelog is genrated and added after new tag is created.
+	if (generateChangelog) {
+		console.log('Generating changelog...')
+
+		await changelogHandler({ outputFile: changelogPath })
+		await git.add('./*').raw('commit', '--amend', '--no-edit')
+	}
 
 	git.push(remote.name, branch.current)
 	git.pushTags()

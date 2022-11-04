@@ -68,10 +68,22 @@ program
 	.option('-r, --releaseBranchPrefix <prefix>', 'Prefix for release branch fork.', 'release/')
 	.option('--gitUser <user>', 'User name to be used for commits.', 'Bender')
 	.option('--gitEmail <email>', 'User email to be used for commits.', 'bender@bot.eu')
+	.option('--changelog', 'Generate changelog.', false)
 	.action(async (options) => {
 		console.log('Our config is: ', options)
-		const { tagPrefix, failOnMissingCommit, releaseBranchPrefix, forceBump, gitUser, gitEmail } = options
-		wrapProcess(shipitHandler({ tagPrefix, gitEmail, gitUser, failOnMissingCommit, forceBump, releaseBranchPrefix }))
+		const { tagPrefix, failOnMissingCommit, releaseBranchPrefix, forceBump, gitUser, gitEmail, changelog } = options
+		wrapProcess(
+			shipitHandler({
+				tagPrefix,
+				gitEmail,
+				gitUser,
+				failOnMissingCommit,
+				forceBump,
+				releaseBranchPrefix,
+				generateChangelog: changelog,
+				changelogPath: path.resolve(commandCwd, './CHANGELOG.md'),
+			}),
+		)
 	})
 
 program
@@ -80,22 +92,25 @@ program
 	.option('--stackName <name>', 'Name of the stack to be deployed.', 'StandaloneNextjsStack-Temporary')
 	.option('--appPath <path>', 'Absolute path to app.', path.resolve(__dirname, '../dist/cdk-app.js'))
 	.option('--bootstrap', 'Bootstrap CDK stack.', false)
-	.option('--lambdaTimeout <sec>', 'Set timeout for lambda function handling server requirests', Number, 15)
-	.option('--lambdaMemory <mb>', 'Set memory for lambda function handling server requirests', Number, 512)
+	.option('--lambdaTimeout <sec>', 'Set timeout for lambda function handling server requirests.', Number, 15)
+	.option('--lambdaMemory <mb>', 'Set memory for lambda function handling server requirests.', Number, 512)
+	.option('--hostedZone <domainName>', 'Hosted zone domain name to be used for creating DNS records (example: example.com).', undefined)
+	.option('--domainNamePrefix <prefix>', 'Prefix for creating DNS records, if left undefined, hostedZone will be used (example: app).', undefined)
 	.action(async (options) => {
 		console.log('Our config is: ', options)
-		const { stackName, appPath, bootstrap, lambdaTimeout, lambdaMemory } = options
-		wrapProcess(deployHandler({ stackName, appPath, bootstrap, lambdaTimeout, lambdaMemory }))
+		const { stackName, appPath, bootstrap, lambdaTimeout, lambdaMemory, hostedZone, domainNamePrefix } = options
+		wrapProcess(deployHandler({ stackName, appPath, bootstrap, lambdaTimeout, lambdaMemory, hostedZone, domainNamePrefix }))
 	})
 
 program
 	.command('changelog')
-	.description('Generate changelog from Git, assuming tag being a release. INTERNAL USE ONLY for now.')
+	.description('Generate changelog from Git, assuming tag being a release.')
 	.option('--outputFile <path>', 'Path to file where changelog should be written.', path.resolve(commandCwd, './CHANGELOG.md'))
+	.option('--gitBaseUrl <url>', 'Absolute URL to your git project', undefined)
 	.action(async (options) => {
 		console.log('Our config is: ', options)
-		const { outputFile } = options
-		wrapProcess(changelogHandler({ outputFile }))
+		const { outputFile, gitBaseUrl } = options
+		wrapProcess(changelogHandler({ outputFile, gitBaseUrl }))
 	})
 
 program.parse(process.argv)

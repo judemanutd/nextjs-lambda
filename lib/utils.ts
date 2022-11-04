@@ -3,6 +3,8 @@ import { exec } from 'child_process'
 import { createWriteStream, existsSync, readdirSync, readFileSync, symlinkSync } from 'fs'
 import glob, { IOptions as GlobOptions } from 'glob'
 import { replaceInFileSync } from 'replace-in-file'
+import semver from 'semver'
+import semverRegex from 'semver-regex'
 
 export enum BumpType {
 	Patch = 'patch',
@@ -276,4 +278,42 @@ export const validateFolderExists = (folderPath: string) => {
 	if (!exists) {
 		throw new Error(`Folder: ${folderPath} does not exist!`)
 	}
+}
+
+const isSemverTag = (tag: string) => (semverRegex().exec(tag)?.[0] ? true : false)
+const parseTag = (tag: string) => semverRegex().exec(tag)?.[0] ?? '0.0.0'
+
+export const sortTagsDescending = (tags: string[]) =>
+	tags.filter(isSemverTag).sort((v1, v2) => {
+		const sv1 = parseTag(v1)
+		const sv2 = parseTag(v2)
+		return semver.rcompare(sv1, sv2)
+	})
+
+export const findHighestTag = (tags: string[]) => sortTagsDescending(tags)[0]
+
+export const getCommitLink = (remoteUrl: string, commit: string) => {
+	if (remoteUrl.includes('bitbucket.org')) {
+		return `${remoteUrl}/commits/${commit}`
+	}
+
+	if (remoteUrl.includes('github.com')) {
+		return `${remoteUrl}/commit/${commit})`
+	}
+
+	return null
+}
+
+export const getCompareLink = (remoteUrl: string, previous: string, next: string) => {
+	if (remoteUrl.includes('bitbucket.org')) {
+		const formattedPrevious = previous ? `${previous}%0D${next}` : next
+		return `${remoteUrl}/branches/compare/${formattedPrevious}`
+	}
+
+	if (remoteUrl.includes('github.com')) {
+		const formattedPath = previous ? `${previous}...${next}` : next
+		return `${remoteUrl}/releases/tag/${formattedPath}`
+	}
+
+	return null
 }
