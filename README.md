@@ -137,10 +137,10 @@ We are looking at 6-8min for creation and 1-3min for update. This is a huge impr
 
 ## Packaging
 
-In order to succefully deploy, you firstly need to include `target: 'standalone'` in your `next.config.js` setup. Secondly, any compression should be turned off as AWS is taking care of that. See `compress: false` in your config.
+In order to succefully deploy, you firstly need to include `output: 'standalone'` in your `next.config.js` setup. Secondly, any compression should be turned off as AWS is taking care of that. See `compress: false` in your config.
 Make sure to use NextJS in version 12 or above so this is properly supported.
 
-Once target is set, you can go on and use your `next build` command as you normally would.
+Once output is set, you can go on and use your `next build` command as you normally would.
 To package everything, make sure to be in your project root folder and next folder `.next` and `public` exist. Packaging is done via NPM CLI command of `@slack/nextjs-lambda pack`.
 
 It will create `next.out/` folder with 3 zip packages. One zip Lambda's code, one is dependencies layer and one is assets layer.
@@ -186,12 +186,8 @@ Simple CLI command that takes commit message and current version and outputs (st
 
 Similar to guess command, however, it automatically tags a commit on current branch and creates release branch for you so hooking up pipelines is as simple as it can be. Version is automatically bumped in common NPM and PHP files (package.json, package-lock.json and composer.json).
 
-<<<<<<< HEAD
 Simply call `@judemanutd/next-lambda shipit` on any branch and be done.
-=======
-Simply call `@sladg/next-lambda shipit` on any branch and be done.
 
 ## Changelog
 
 Simple utility that compares two tags and outputs commits between those two tags. It's intended to be used in CI/CD pipelines to generate changelog for release notes. If you are using using `shipit` command, use `--changelog` flag instead.
->>>>>>> upstream/master

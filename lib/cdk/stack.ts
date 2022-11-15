@@ -21,6 +21,8 @@ import { Code, Function, LayerVersion, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
 import { RetentionDays } from '@aws-cdk/aws-logs'
+import { Rule, Schedule } from 'aws-cdk-lib/aws-events'
+import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets'
 
 import { CustomStackProps, SetupApiGwProps, SetupCfnDistroProps, SetupImageLambdaProps, SetupServerLambdaProps, UploadAssetsProps } from './types'
 
@@ -154,6 +156,12 @@ export class NextStandaloneStack extends Stack {
 					.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}),
 				NEXTJS_LAMBDA_BASE_PATH: basePath,
 			},
+		})
+
+		new Rule(this, 'nextjs-lambda-schedule', {
+			description: 'NextJs Default Lambda warmup event',
+			targets: [new LambdaFunction(serverLambda)],
+			schedule: Schedule.rate(Duration.minutes(5)),
 		})
 
 		new CfnOutput(this, 'serverLambdaArn', { value: serverLambda.functionArn })
