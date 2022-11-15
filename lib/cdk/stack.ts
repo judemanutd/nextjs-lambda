@@ -161,7 +161,7 @@ export class NextStandaloneStack extends Stack {
 		new Rule(this, 'nextjs-lambda-schedule', {
 			description: 'NextJs Default Lambda warmup event',
 			targets: [new LambdaFunction(serverLambda)],
-			schedule: Schedule.rate(Duration.minutes(5)),
+			schedule: Schedule.rate(Duration.minutes(15)),
 		})
 
 		new CfnOutput(this, 'serverLambdaArn', { value: serverLambda.functionArn })
